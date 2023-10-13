@@ -84,14 +84,14 @@ public class Game {
 				ball.collision();
 				wallHitLeft++;
 				System.out.println("wallLeft: " + wallHitLeft);
-				score1.subtrScore(); //temporarly
+				//score1.subtrScore(); //temporarly
 				
 			}
 		if (chOfball.intersects(staticObject.getRightLine().getConvexHall())) {
 			ball.collision();
 			wallHitRigtht++;
-			System.out.println("wallRight" + wallHitRigtht);
-			score2.subtrScore(); //temporarly
+			System.out.println("wallRight: " + wallHitRigtht);
+			//score2.subtrScore(); //temporarly
 		}
 		
 		

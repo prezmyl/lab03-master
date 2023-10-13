@@ -13,7 +13,6 @@ public class DrawingThread extends AnimationTimer {
 	private final GraphicsContext gc;
 	double fixedDeltaT = 0.9;
 
-	private final World world;
 	private final Game game;
 	
 	private long lasttime = -1;
@@ -21,7 +20,6 @@ public class DrawingThread extends AnimationTimer {
 	public DrawingThread(Canvas canvas) {
 		this.canvas = canvas;
 		this.gc = canvas.getGraphicsContext2D();
-		this.world = new World(canvas.getWidth(), canvas.getHeight());
 		this.game = new Game(canvas.getWidth(), canvas.getHeight());
 	}
 

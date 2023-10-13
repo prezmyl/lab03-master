@@ -11,7 +11,7 @@ public class DrawingThread extends AnimationTimer {
 	private final Canvas canvas;
 	
 	private final GraphicsContext gc;
-	double fixedDeltaT = 1;
+	double fixedDeltaT = 0.9;
 
 	private final World world;
 	private final Game game;
@@ -40,7 +40,7 @@ public class DrawingThread extends AnimationTimer {
 				//time are in nanoseconds and method simulate expects seconds
 				
 				//world.simulate(deltaT);
-				game.simulate(deltaT);
+				game.simulate(fixedDeltaT);
 			}
 			lasttime = now;
 		}

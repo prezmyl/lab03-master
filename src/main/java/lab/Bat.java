@@ -29,13 +29,13 @@ public class Bat {
 	public void draw(GraphicsContext gc) {
 		gc.save();
 		gc.setFill(Color.GRAY);
-		Point2D canvasPosition = game.transform2Canvas(position, sizeX, sizeY);
+		Point2D canvasPosition = game.transform2Canvas(position, sizeY);
 		gc.fillRect(canvasPosition.getX(), canvasPosition.getY(), sizeX, sizeY);
 		gc.restore();
 	}
 	
 	public void simulate(double timeStep) {
-		position = position.add(velocity);	
+		position = position.add(velocity.multiply(timeStep));	
 	    
 	    if (position.getY() - lineWidth < 0 || position.getY() + sizeY > (game.getHeight() - lineWidth)) {
 			this.velocity = velocity.multiply(-1);

@@ -25,7 +25,7 @@ public class Score {
 		gc.setFont(Font.font("Arial", FontWeight.BOLD, 80));
 	    gc.setFill(Color.GREY);
 	    
-	    Point2D p = game.transform2Canvas(position, 0, 0);
+	    Point2D p = game.transform2Canvas(position, 0);
 	    String scoreTxt = "" + score;
 	    gc.fillText(scoreTxt, p.getX(), p.getY());
 	}

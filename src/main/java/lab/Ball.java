@@ -25,17 +25,17 @@ public class Ball {
 	public void draw(GraphicsContext gc) {
 		gc.save();
 		gc.setFill(Color.GRAY);
-		Point2D p = game.transform2Canvas(position, size, size);
+		Point2D p = game.transform2Canvas(position, size);
 		gc.fillRect(p.getX(), p.getY(), size, size);
 		gc.restore();
 	}
 	
 	public void simulate(double deltaT) {
-		position = position.add(velocity);
+		position = position.add(velocity.multiply(deltaT));
 	
-		if (position.getX() < 0 || position.getX() > game.getWidth() ){
+	/*	if (position.getX() < 0 || position.getX() > game.getWidth() ){
 			velocity = velocity.multiply(-1);
-		}
+		}*/
 	}
 	
 	public Rectangle2D getConvexhall() {

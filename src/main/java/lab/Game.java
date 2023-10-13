@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Rectangle2D;
 
 
+
 public class Game {
 
 	private final double width;
@@ -21,7 +22,8 @@ public class Game {
 	private double sizeBall = 20;
 	private double actualTime;
 	private double lastHit; //decl s default inic.
-	private int batHitCount;
+	private int batHitCount, wallHitLeft, wallHitRigtht;
+
 	
 	private final Score score1;
 	private final Score score2;
@@ -34,12 +36,12 @@ public class Game {
 		this.height = height;
 		this.staticObject = new StaticObjects(this);
 		this.bats = new Bat[] {
-			new Bat(this, new Point2D(gap, lineWidth), new Point2D(0,9), sizeBatX, sizeBatY)
+			new Bat(this, new Point2D(gap, lineWidth), new Point2D(0,5), sizeBatX, sizeBatY)
 			,new Bat(this, new Point2D(width - (gap + sizeBatX), height - (sizeBatY + lineWidth)), new Point2D(0,-4.5), sizeBatX, sizeBatY)
 		};
 		this.ball = new Ball(this, new Point2D(width/2 - sizeBall/2 ,height/2), new Point2D(6.41,0), sizeBall);
-		this.score1 = new Score(this, new Point2D(width/2 - 2.5 * gap, height - 2.5 * gap), 0);
-		this.score2 = new Score(this, new Point2D(width/2 +  1.5 * gap, height - 2.5 * gap), 0);
+		this.score1 = new Score(this, new Point2D(width/2 - 3 * gap, height - 2.5 * gap), 0);
+		this.score2 = new Score(this, new Point2D(width/2 +  2 * gap, height - 2.5 * gap), 0);
 	}
 
 	public void draw(GraphicsContext gc) {
@@ -65,7 +67,9 @@ public class Game {
 			if (bat.getConvexHall().intersects(chOfball)) {
 				ball.collision();
 				batHitCount++;
-						
+				System.out.println("ballCollision: " + batHitCount);
+				
+				//temporarly
 				if (bat == bats[0]) {
 					score1.addScore();
 				}
@@ -73,25 +77,28 @@ public class Game {
 					score2.addScore();
 				}
 			}
-			/*if (position.getX() < 0 || position.getX() > game.getWidth() ){
-				velocity = velocity.multiply(-1);
-			}*/
+		}
 			
-			if (chOfball.getMinX() < 0) {
+			
+		if (chOfball.intersects(staticObject.getLeftLine().getConvexHall())) {
 				ball.collision();
-				score1.subtrScore();
+				wallHitLeft++;
+				System.out.println("wallLeft: " + wallHitLeft);
+				score1.subtrScore(); //temporarly
 				
 			}
-			if (chOfball.getMaxX() > this.getWidth()) {
-				ball.collision();
-				score1.subtrScore();
-			}
+		if (chOfball.intersects(staticObject.getRightLine().getConvexHall())) {
+			ball.collision();
+			wallHitRigtht++;
+			System.out.println("wallRight" + wallHitRigtht);
+			score2.subtrScore(); //temporarly
 		}
+		
 		
 	}
 	
-	public Point2D transform2Canvas(Point2D worldPoint, double entityWidth, double entityHieght ) {
-		return new Point2D(worldPoint.getX() - entityWidth/2, height - worldPoint.getY() - entityHieght);
+	public Point2D transform2Canvas(Point2D worldPoint, double entityHieght) {
+		return new Point2D(worldPoint.getX(), height - worldPoint.getY() - entityHieght);
 	}
 	
 	public double getWidth() {

@@ -5,7 +5,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Bat {
+public class Bat implements DrawableSimulable, Collisionable{
 		
 	private final Game game;
 	private final double sizeY;
@@ -34,6 +34,15 @@ public class Bat {
 		gc.restore();
 	}
 	
+	public double GetBatCenterY() {
+		return getBoundingBox().getMinY() + getBoundingBox().getHeight()/2;
+	}
+	
+	public double GetBatCenterX() {
+		return getBoundingBox().getMinX() + getBoundingBox().getWidth()/2;
+	}
+	
+	
 	public void simulate(double timeStep) {
 		position = position.add(velocity.multiply(timeStep));	
 	    
@@ -42,9 +51,12 @@ public class Bat {
 		}
 	}
 	
-	public Rectangle2D getConvexHall() {
+	public Rectangle2D getBoundingBox() {
 		return new Rectangle2D(position.getX(), position.getY(), sizeX, sizeY);
 	}
+
+
+
 	
 	
 }
